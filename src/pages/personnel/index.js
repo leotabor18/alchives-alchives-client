@@ -24,7 +24,7 @@ const headCells = [
 const Personnel = (props) => {
   const { match } = props;
   const { id } = match.params;
-  const isCreate = id === 'create';
+  const isCreate = id === 'create' || !id ;
   
   const classes = useStyles();
   const history = useHistory();
@@ -41,7 +41,7 @@ const Personnel = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [prevImage, setPrevImage] = useState('');
   const [preview, setPreview] = useState(null)
-
+  console.log('id', id)
   const initialValues = {
     fullName,
     suffix,
@@ -49,7 +49,6 @@ const Personnel = (props) => {
     title,
     department,
     position,
-    image,
     role
   }
 
@@ -64,11 +63,15 @@ const Personnel = (props) => {
       delete newValue.image;
     }
 
+    console.log('newValue', newValue)
     try {
       await request({
-        url: isCreate ? `${api.PERSONNELS_API}/create` : `${api.PROGRAM_API}/${id}`,
+        url: isCreate ? `${api.PERSONNELS_API}/create` : `${api.PERSONNELS_API}/${id}`,
         method: isCreate ? API_METHOD.POST: API_METHOD.PATCH,
-        data: values
+        data: newValue,
+        headers: {
+          'Content-type': 'multipart/form-data'
+        }
       });
 
       history.push('/portal/personnels');
@@ -192,35 +195,34 @@ return (
                           helperText={formik.touched.suffix && formik.errors.suffix}
                         />
                       </Grid>
-                      <Grid item lg={6} md={6} sm={12} xs={12}>
+                      {/* <Grid item lg={6} md={6} sm={12} xs={12}>
                         <TextField
                           fullWidth
                           id="title"
-                          placeholder='City Mayor, Dean, etc.'
-                          label={'Title*'}
+                          placeholder='City Mayor, Dean etc.'
+                          label={'Title'}
                           name="title"
                           value={formik.values.title}
                           onChange={formik.handleChange}
                           error={formik.touched.title && Boolean(formik.errors.title)}
                           helperText={formik.touched.title ? formik.errors.title: 
-                            'Ex. City Mayor, Dean, etc.'}
+                            'Ex. City Mayor, Dean etc.'}
                         />
-                      </Grid>
-                      <Grid item lg={6} md={6} sm={12} xs={12}>
+                      </Grid> */}
+                      <Grid item lg={12} md={12} sm={12} xs={12}>
                         <TextField
                           fullWidth
                           id="position"
-                          label={'Position*'}
-                          placeholder='Member, Vice Chairman, Secretary, etc.'
+                          label={'Department Position*'}
+                          placeholder='Member, Vice Chairman, Secretary, Dean etc.'
                           name="position"
                           value={formik.values.position}
                           onChange={formik.handleChange}
                           error={formik.touched.position && Boolean(formik.errors.position)}
-                          helperText={formik.touched.position ? formik.errors.position: 
-                            'Ex. Member, Vice Chairman, Secretary, etc.'}
+                          helperText={formik.touched.position && formik.errors.position}
                         />
                       </Grid>
-                      <Grid item lg={6} md={6} sm={12} xs={12}>
+                      <Grid item lg={12} md={12} sm={12} xs={12}>
                         <TextField
                           fullWidth
                           id="department"
@@ -230,8 +232,7 @@ return (
                           value={formik.values.department}
                           onChange={formik.handleChange}
                           error={formik.touched.department && Boolean(formik.errors.department)}
-                          helperText={formik.touched.department ? formik.errors.department: 
-                            'Ex. Board of Trustees, Admin Staff, etc. Please include the name of the institute if you hold the position of Dean.'}
+                          helperText={formik.touched.department && formik.errors.department}
                         />
                       </Grid>
                     </Grid>  

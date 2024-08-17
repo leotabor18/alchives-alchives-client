@@ -26,6 +26,7 @@ import Personnels from '../pages/personnels';
 import ContentManagements from '../pages/content-management';
 import Overviews from '../pages/overviews';
 import Personnel from '../pages/personnel';
+import Overview from '../pages/overview';
 
 const EnhancedSwitch = (props) => {
   const { children } = props
@@ -72,7 +73,9 @@ const Routes = () => {
               <RoutesLayout exact layout={PortalLayout} path="/portal/personnel/create" component={Personnel} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/personnel/:id" component={Personnel} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/content-management" component={ContentManagements} />
-              <RoutesLayout exact layout={PortalLayout} path="/portal/school-overview" component={Overviews} />
+              {/* <RoutesLayout exact layout={PortalLayout} path="/portal/school-overview" component={Overviews} />
+              <RoutesLayout exact layout={PortalLayout} path="/portal/school-overview/create" component={Overview} />
+              <RoutesLayout exact layout={PortalLayout} path="/portal/school-overview/:id" component={Overview} /> */}
             </>
           : 
             <EnhancedSwitch>

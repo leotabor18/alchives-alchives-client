@@ -83,11 +83,9 @@ export const personnelSchema = Yup.object({
                       .required(REQUIRED_FIELD),
   prefix: Yup.string()
                       .required(REQUIRED_FIELD),
-  title: Yup.string()
+  department: Yup.string()
                       .required(REQUIRED_FIELD),
-                      department: Yup.string()
-                      .required(REQUIRED_FIELD),
-                      position: Yup.string()
+  position: Yup.string()
                       .required(REQUIRED_FIELD)
 });
 

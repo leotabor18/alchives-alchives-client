@@ -14,7 +14,7 @@ import IconButton from '../../components/icon-button';
 
 const headCells = [
   createHeadCells('name', false, 'Name', false, true),
-  createHeadCells('title', false, 'Title', false, false),
+  createHeadCells('position', false, 'Position', false, false),
   createHeadCells('department', false, 'Department', false, false),
 ]
 

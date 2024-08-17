@@ -35,11 +35,11 @@ const Overviews = () => {
   // const { data, order, orderBy, page, rowsPerPage, isLoading, total } = state;
 
   const handleView = (id) => {
-    history.push(`/portal/programs/${id}`)
+    history.push(`/portal/school-overvie/${id}`)
   }
 
   const handleAddAlumni = () => {
-    history.push('/portal/programs/create');
+    history.push('/portal/school-overvie/create');
   }
 
   const handleSearchQuery = (values) => {
@@ -48,15 +48,11 @@ const Overviews = () => {
   return (
     <Container className={classes.container}>
       <Title name='School Overviews'/>
-      <Grid container>
-        <Grid item xl={6} lg={6}>
-          <SearchBar handleSearchQuery={handleSearchQuery}/>
-        </Grid>
-        <Grid className={classes.iconContainer} item xl={6} lg={6} md={6} xs={2} sm={6}>
-          <IconButton title='Add Program' icon={<AddBoxIcon fontSize='large' />} handleClick={handleAddAlumni} />
-        </Grid>
-      </Grid>
-      <Loading />
+      <Paper classes={classes.paper} style={{marginTop: '16px'}}>
+        <Container>
+          Loading...
+        </Container>
+      </Paper>
       {/* {
         isLoading || (!data.length && page > 0) ?
           <Loading />

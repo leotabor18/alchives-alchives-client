@@ -15,7 +15,7 @@ const MENU = [
   createNavigationBarMenu('Graduation Events', '/portal/events', <FontAwesomeIcon icon={faCalendar} size="lg" />),
   createNavigationBarMenu('School Personnels', '/portal/personnel', <FontAwesomeIcon icon={faUserGroup} size="lg" />),
   createNavigationBarMenu('Content Management', '/portal/content-management', <FontAwesomeIcon icon={faFolderOpen} size="lg" />),
-  createNavigationBarMenu('School Overview', '/portal/school-overview', <FontAwesomeIcon icon={faSchool} size="lg" />)
+  // createNavigationBarMenu('School Overview', '/portal/school-overview', <FontAwesomeIcon icon={faSchool} size="lg" />)
 ]
 
 const PortalLayout = (props) => {

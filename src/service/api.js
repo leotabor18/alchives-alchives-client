@@ -17,6 +17,7 @@ const api = {
   USER_API               : `${API_BASE_PATH}/users`,
   PROGRAMS_API            : `${API_BASE_PATH}/programs`,
   PERSONNELS_API         : `${API_BASE_PATH}/personnels`,
+  PERSONNEL_API         : `${API_BASE_PATH}/personnel`,
   PROGRAM_API            : `${API_BASE_PATH}/program`,
   PROGRAM_SEARCH_API     : `${API_BASE_PATH}/programs/search/findByNameContaining`,
 };
