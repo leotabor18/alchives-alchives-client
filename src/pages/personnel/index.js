@@ -66,7 +66,7 @@ const Personnel = (props) => {
     console.log('newValue', newValue)
     try {
       await request({
-        url: isCreate ? `${api.PERSONNELS_API}/create` : `${api.PERSONNELS_API}/${id}`,
+        url: isCreate ? `${api.PERSONNEL_API}/create` : `${api.PERSONNEL_API}/${id}`,
         method: isCreate ? API_METHOD.POST: API_METHOD.PATCH,
         data: newValue,
         headers: {
@@ -74,14 +74,14 @@ const Personnel = (props) => {
         }
       });
 
-      history.push('/portal/personnels');
+      history.push('/portal/personnel');
     } catch (error) {
       console.log(error);
     }
   }
 
   const handleCancel = () => {
-    history.push('/portal/personnels');
+    history.push('/portal/personnel');
   }
 
   const handleGetPersonnel = async() => {
@@ -91,14 +91,14 @@ const Personnel = (props) => {
         url: `${api.PERSONNELS_API}/${id}`,
         method: API_METHOD.GET,
       })
-      const { fullName, suffix, prefix, title, department, position, image, role } = response.data;
+      const { fullName, suffix, prefix, title, department, position, profilePic, role } = response.data;
       setFullName(fullName);
       setSuffix(suffix);
       setPrefix(prefix);
       setTitle(title);
       setDepartment(department);
       setPosition(position);
-      setPreview(image);
+      setPreview(profilePic);
       setPrevImage(image);
       setRole(role);
     } catch (e) {

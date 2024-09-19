@@ -67,9 +67,9 @@ const useGetApi = (props) => {
       });
     } else if (pageName === 'Personnels') {
       return embedded.personnels.map(institute => {
-        const { name, title, department, _links } = institute;
+        const { fullName, position, department, _links } = institute;
         const personnelId = _links.self.href.replace(`${api}/`, '');
-        return dataFormat(personnelId, name, title, department);
+        return dataFormat(personnelId, fullName, position, department);
       });
     } else {
       
@@ -157,7 +157,8 @@ const useGetApi = (props) => {
     handleChangeRowsPerPage, 
     handleRequestSort,
     handleUpdateData,
-    handleQueryParams
+    handleQueryParams,
+    getData
   }
 
   return { state, handles }

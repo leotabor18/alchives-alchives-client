@@ -58,7 +58,11 @@ const Login = () => {
         }
       });
 
-      history.push('portal/alumni');
+      if (userResponse.data.role === 'ALUMNI') {
+        history.push('/');
+      } else {
+        history.push('portal/alumni');
+      }
       setSubmitting(false);
     } catch(e) {
       console.log('error', e)
@@ -84,11 +88,11 @@ const Login = () => {
   }
 
   const handleForgotPassword = () => {
-    history.push('portal/forgot-password');
+    history.push('/forgot-password');
   }
 
   const handleActivateAccount = () => {
-    history.push('portal/activate-account');
+    history.push('/activate-account');
   }
 
   return (

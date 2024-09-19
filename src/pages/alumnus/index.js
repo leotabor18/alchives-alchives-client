@@ -125,12 +125,13 @@ const Alumnus = (props) => {
         url: `${api.ALUMNIS_API}/${id}`,
         method: API_METHOD.GET,
       })
-      const { firstName, lastName, studentNumber, image, batchYear, quotes, _links } = response.data;
+      const { firstName, email, lastName, studentNumber, image, batchYear, quotes, _links } = response.data;
       setFirstName(firstName);
       setLastName(lastName);
       setStudentNumber(studentNumber);
       setQuotes(quotes);
       setBatchYear(batchYear);
+      setEmail(email)
 
       const programId = _links.program.href.replace(`${api.ALUMNIS_API}/`, '');
 
@@ -139,7 +140,7 @@ const Alumnus = (props) => {
         method: API_METHOD.GET,
       })
       setProgram(secondResponse.data.name)
-      setProgramId(programId.replace('/program', ''));
+      setProgramId(secondResponse.data._links.program.href.replace(api.PROGRAMS_API +"/", ''));
       setPreview(image);
       setPrevImage(image);
     } catch (e) {

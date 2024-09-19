@@ -137,7 +137,7 @@ const PublicAlumni = () => {
 
   useEffect(() => {
     if (!programId) {
-      history.push('/programs');
+      history.push('/');
       return;
     }
 
@@ -174,7 +174,7 @@ const PublicAlumni = () => {
   }
 
   const handleHome = () => {
-    history.push('/programs')
+    history.push('/')
   }
 
   return (

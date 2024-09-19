@@ -7,6 +7,7 @@ const api = {
   ADMINISTRATORS_BY_TOKEN: `${API_BASE_PATH}/auth/search/findByToken`,
   USERS_BY_TOKEN         : `${API_BASE_PATH}/auth/user`,
   ALUMNIS_API             : `${API_BASE_PATH}/alumnis`,
+  IMPORT_API             : `${API_BASE_PATH}/import-alumni`,
   ALUMNI_API             : `${API_BASE_PATH}/alumni`,
   ALUMNI_QUERY_API       : `${API_BASE_PATH}/alumnis/search/findByBatchYearAndProgramName`,
   ALUMNI_SEARCH_API       : `${API_BASE_PATH}/alumnis/search/findByFirstNameContainingOrLastNameContaining`,

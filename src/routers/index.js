@@ -36,7 +36,7 @@ const EnhancedSwitch = (props) => {
       {
         children
       }
-      <Route ><Redirect to="/portal" /></Route>
+      <Route ><Redirect to="/" /></Route>
     </Switch>
   )
 }
@@ -47,14 +47,11 @@ const Routes = () => {
 
   return (
     <Switch>
-      <Route exact path="/"><Redirect to="/programs" /></Route>
-      <RoutesLayout layout={MainLayout} exact path="/programs" component={PublicPrograms} />
-      <RoutesLayout layout={MainLayout} exact path="/alumni" component={PublicAlumni} />
       
         {
-          token ?
+          token && state.user.role === 'ADMIN' ?
             <>
-              <Route ><Redirect to="/portal/alumni" /></Route>
+              <Route exact path="/" ><Redirect to="/portal/alumni" /></Route>
               <RoutesLayout exact layout={PortalLayout} path="/portal/alumni" component={Alumni} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/alumni/:id" component={Alumnus} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/alumni/create" component={Alumnus} />
@@ -77,12 +74,17 @@ const Routes = () => {
               <RoutesLayout exact layout={PortalLayout} path="/portal/school-overview/create" component={Overview} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/school-overview/:id" component={Overview} /> */}
             </>
-          : 
+          : token && state.user.role === 'ALUMNI' ?
+            <>
+              <RoutesLayout layout={MainLayout} exact path="/alumni" component={PublicAlumni} />
+              <RoutesLayout layout={MainLayout} exact path="/" component={PublicPrograms} />
+            </>
+          :
             <EnhancedSwitch>
-              <RoutesLayout exact layout={AuthLayout} path="/portal" component={Login} />
-              <RoutesLayout exact layout={AuthLayout} path="/portal/activate-account" component={ActivateAccount} />
-              <RoutesLayout exact layout={AuthLayout} path="/portal/forgot-password" component={ForgotPassword} />
-              <RoutesLayout exact layout={AuthLayout} path="/portal/new-password/:code" component={NewPassword} />
+              <RoutesLayout exact layout={AuthLayout} path="/" component={Login} />
+              <RoutesLayout exact layout={AuthLayout} path="/activate-account" component={ActivateAccount} />
+              <RoutesLayout exact layout={AuthLayout} path="/forgot-password" component={ForgotPassword} />
+              <RoutesLayout exact layout={AuthLayout} path="/new-password/:code" component={NewPassword} />
             </EnhancedSwitch>
         }
     </Switch>

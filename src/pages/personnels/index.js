@@ -47,6 +47,8 @@ const Personnels = () => {
     handleQueryParams({ programName: values }, api.PROGRAM_SEARCH_API);
   }
 
+  console.log('data', data)
+
   return (
     <Container className={classes.container}>
       <Title name='School Personnels'/>

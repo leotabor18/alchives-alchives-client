@@ -5,7 +5,7 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Button, Link, TextField } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router';
 import filterImage from '../../assets/images/filter.png';
 import importImage from '../../assets/images/import.png';
@@ -25,6 +25,11 @@ import Loading from '../../components/loading';
 import { multipleRequest, request } from '../../service/request';
 import { API_METHOD } from '../../utility/constant';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CSVLink } from 'react-csv';
+import Papa from "papaparse";
+
+const CSV_HEADER = ['studentNumber',	'firstName',	'lastName',	'program',	'institute', 'batch'];
+
 
 const ALUMNI_MENU = [
   createNavigationBarMenu('Import', 'import', <FileUploadIcon fontSize='medium' />),
@@ -61,6 +66,41 @@ const Alumni = () => {
   const [batchYear, setBatchYear] = useState('');
   const [deleteList, setDeleteList] = useState([]);
   const [deleteIdList, setDeleteIdList] = useState([]);
+  const [importData, setImportData] = useState('');
+  const csvInstance = useRef(null);
+  const [csvFile, setCsvFile] = useState();
+  const [csvData, setCsvData] = useState();
+  const [isFilePresent, setIsFilePresent] = useState(false);
+
+  const handleFileChange = (event) => {
+    const csv       = event.target.files;
+    const fileType  = csv[0].name.split('.').pop();
+    let alumniData  = {};
+
+    setCsvFile(csv[0].name);
+
+    if (csv) {
+      Papa.parse(csv[0], {
+        complete: function (results) {
+          let values = results.data[0].some((val) => val.charAt(0) === '#') ? results.data.slice(1) : results.data;
+          values = values.filter(val => val[0].charAt(0) !== '#');
+          let objects = values.map(array => {
+            let object = {};
+            CSV_HEADER.forEach((key, i) => object[key] = array[i]);
+            return object;
+          });
+
+          results.data.shift();
+          alumniData = { 
+            "importUsers": objects.filter((object) => object.studentNumber !== '')
+          };
+          setIsFilePresent(true);
+          setCsvData(alumniData);
+        }
+      })
+    }
+  }
+
 
   const getProps = {
     api: api.ALUMNIS_API,
@@ -81,7 +121,7 @@ const Alumni = () => {
   const { state, handles } = useGetApi(getProps)
   const { state: programState } = useGetApi(getProgramProps)
 
-  const { handleUpdateData, handleChangePage, handleChangeRowsPerPage, handleRequestSort, setIsLoading, handleQueryParams } = handles;
+  const { handleUpdateData, handleChangePage, handleChangeRowsPerPage, handleRequestSort, getData, setIsLoading, handleQueryParams } = handles;
   const { data, order, orderBy, page, rowsPerPage, total, isLoading } = state;
   const { data: programData } = programState;
   
@@ -125,15 +165,23 @@ const Alumni = () => {
     setFilterOpen(false);
   }
 
-  const handleImportSubmit = () => {
+  const handleImportSubmit = async () => {
+    console.log('first', csvData)
+
+    await request({
+      url: `${api.IMPORT_API}/`,
+      method: API_METHOD.POST,
+      data : csvData
+    })
+
+    getData();
     setImportOpen(false);
+    setCsvFile('');
+    setCsvData();
   }
   
   const handleCloseImport = () => {
     setImportOpen(false);
-  }
-
-  const handleFileChange = () => {
   }
 
   const handleView = (id) => {
@@ -203,10 +251,8 @@ const Alumni = () => {
           <TextField
             fullWidth
             id="file"
+            value={csvFile}
             label={'File*'}
-            // name="studentNumber"
-            // value={formik.values.studentNumber}
-            // onChange={formik.handleChange}
           />
           <Button variant='contained' component='label'>
             Select

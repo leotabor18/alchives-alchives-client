@@ -18,7 +18,7 @@ import { LOGOUT } from '../../reducer/AuthReducer';
 
 const NAVIGATION_BAR_MENU = [
   createNavigationBarMenu('Settings', '/portal/settings', <FontAwesomeIcon icon={faGear} size="lg" />),
-  createNavigationBarMenu('Logout', '/portal', <FontAwesomeIcon icon={faSignOut} size="lg" />)
+  createNavigationBarMenu('Logout', '/', <FontAwesomeIcon icon={faSignOut} size="lg" />)
 ]
 
 const MOBILE_NAVIGATION_BAR_MENU = [
@@ -36,9 +36,9 @@ const PROFILE_MENU = [
 ]
 
 const PUBLIC_MENU = [
-  createNavigationBarMenu('Programs', '/programs', <FontAwesomeIcon icon={faAddressBook} size="lg" />),
-  createNavigationBarMenu('Alumni', '/alumni', <FontAwesomeIcon icon={faUserGraduate} size="lg" />),
-  createNavigationBarMenu('Portal Login', '/portal', <FontAwesomeIcon icon={faSignIn} size="lg" />)
+  // createNavigationBarMenu('Programs', '/programs', <FontAwesomeIcon icon={faAddressBook} size="lg" />),
+  // createNavigationBarMenu('Alumni', '/alumni', <FontAwesomeIcon icon={faUserGraduate} size="lg" />),
+  createNavigationBarMenu('Logout', '/', <FontAwesomeIcon icon={faSignIn} size="lg" />)
 ]
 
 const NOTICATION = [
@@ -87,7 +87,7 @@ const NavigationBar = (props) => {
   const handleProfileItemClick = (path) => {
     setAnchorElUser(null);
 
-    if (path === '/portal') {
+    if (path === '/') {
       signOut();
     }
     history.push(path)
@@ -102,6 +102,9 @@ const NavigationBar = (props) => {
 
   const handlePublicItemClick = (path) => {
     setAnchorElPublic(null);
+    if (path === '/') {
+      signOut();
+    }
     history.push(path)
   }
 
@@ -170,12 +173,12 @@ const NavigationBar = (props) => {
           {
             isPublic ?
               <Box className={classes.menuContainer} sx={{ flexGrow: 0 }}>
-                {
+                {/* {
                   (!isMobileView && !isTabletView ) ?
                     <SearchBar />
                   :
                     <></>
-                }
+                } */}
                 <Tooltip title="Profile settings">
                   <IconButton onClick={handleOpenPublicMenu} sx={{ p: 0 }}>
                     <MenuIcon className={classes.buttonIcon} alt="Menu" fontSize='large' />

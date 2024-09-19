@@ -203,7 +203,22 @@ const TableContent = (props) => {
           <TableCell align="left">{row.institute}</TableCell>
         </>
       )
-    case 'Notification':
+    case 'Personnels':
+      return (
+        <>
+          <TableCell
+            component="th"
+            id={labelId}
+            scope="row"
+          >
+            <Link className={classes.link} onClick={() => handleView(row.id)}>
+              {row.name}
+            </Link>
+          </TableCell>
+          <TableCell align="left">{row.title}</TableCell>
+          <TableCell align="left">{row.department}</TableCell>
+        </>
+      )
     default:
       return <></>
   }
