@@ -67,9 +67,16 @@ const useGetApi = (props) => {
       });
     } else if (pageName === 'Personnels') {
       return embedded.personnels.map(institute => {
-        const { name, title, department, _links } = institute;
+        const { fullName, position, department, _links } = institute;
         const personnelId = _links.self.href.replace(`${api}/`, '');
-        return dataFormat(personnelId, name, title, department);
+        return dataFormat(personnelId, fullName, position, department);
+      });
+    } else if (pageName === 'Events') {
+      console.log("events here", embedded)
+      return embedded.events.map(event => {
+        const { name, venue, date, batchYear, _links } = event;
+        const eventId = _links.self.href.replace(`${api}/`, '');
+        return dataFormat(eventId, name, venue, date, batchYear);
       });
     } else {
       

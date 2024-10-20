@@ -27,6 +27,7 @@ import ContentManagements from '../pages/content-management';
 import Overviews from '../pages/overviews';
 import Personnel from '../pages/personnel';
 import Overview from '../pages/overview';
+import Event from '../pages/event';
 
 const EnhancedSwitch = (props) => {
   const { children } = props
@@ -67,8 +68,8 @@ const Routes = () => {
               <RoutesLayout exact layout={PortalLayout} path="/portal/profile" component={Profile} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/profile/settings" component={ProfileSetting} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/events" component={Events} />
-              <RoutesLayout exact layout={PortalLayout} path="/portal/events/create" component={Events} />
-              <RoutesLayout exact layout={PortalLayout} path="/portal/events/:id" component={Events} />
+              <RoutesLayout exact layout={PortalLayout} path="/portal/events/create" component={Event} />
+              <RoutesLayout exact layout={PortalLayout} path="/portal/events/:id" component={Event} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/personnel" component={Personnels} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/personnel/create" component={Personnel} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/personnel/:id" component={Personnel} />

@@ -13,6 +13,11 @@ export default makeStyles((theme) => ({
     border: '2px solid #a5a5a5',
     boxShadow: 'inset 0 0 24px rgba(0, 0, 0, 0.5)'
   },
+  bookContentStudents: {
+    backgroundColor: '#FFFAF0',
+    border: '2px solid #a5a5a5',
+    boxShadow: 'inset 0 0 24px rgba(0, 0, 0, 0.5)',
+  },
   firstPage: {
     visibility: 'hidden'
   },
@@ -32,14 +37,16 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     padding: theme.spacing(3),
-    height:'80%'
+    height:'100%'
   },
   gradPic: {
-    width: '60%',
-    marginBottom: theme.spacing(2)
+    width: '25%',
+    marginBottom: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    borderRadius: '50%',
   },
   textBox: {
-    textAlign: 'center'
+    textAlign: 'left',
   },
   parentContainer: {
     maxWidth: '100% !important',
@@ -62,6 +69,10 @@ export default makeStyles((theme) => ({
   },
   programPic: {
     width: '150px',
+    marginBottom: theme.spacing(1)
+  },
+  programPicSlide: {
+    width: '250px',
     marginBottom: theme.spacing(1)
   },
   studentPic: {
@@ -102,6 +113,11 @@ export default makeStyles((theme) => ({
     '& .MuiPaper-root' : {
       maxWidth: '900px'
     }
+  },
+  studentName: {
+    fontSize: '20px',
+    fontWeight: 'bold',
+    color: colors.PRIMARY
   }
 }))
 

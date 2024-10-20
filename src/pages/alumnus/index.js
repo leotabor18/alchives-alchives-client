@@ -84,7 +84,7 @@ const Alumnus = (props) => {
       ...values,
       programId,
       award,
-      image,
+      image: image.name,
       batchYear
     }
 

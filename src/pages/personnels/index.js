@@ -1,5 +1,5 @@
 import { Container, Grid, Paper } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Title from '../../components/title'
 import useStyles from './styles';
 import SearchBar from '../../components/search-bar';
@@ -13,7 +13,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import IconButton from '../../components/icon-button';
 
 const headCells = [
-  createHeadCells('name', false, 'Name', false, true),
+  createHeadCells('fullName', false, 'Name', false, true),
   createHeadCells('position', false, 'Position', false, false),
   createHeadCells('department', false, 'Department', false, false),
 ]
@@ -46,6 +46,10 @@ const Personnels = () => {
   const handleSearchQuery = (values) => {
     handleQueryParams({ programName: values }, api.PROGRAM_SEARCH_API);
   }
+
+  useEffect(() => {
+    console.log('hereee', data);
+  }, [])
 
   return (
     <Container className={classes.container}>

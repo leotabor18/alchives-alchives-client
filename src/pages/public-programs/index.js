@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Link, Typography } from '@mui/material';
+import { Box, Container, Grid, Link, Paper, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import Tile from '../../components/tile';
 import useGetApi from '../../hooks/useGetApi';
@@ -26,54 +26,66 @@ const PublicPrograms = () => {
   const batchYears = getBatchYear(2016);
   
   const [batchYear, setBatchYear] = useState(false);
+  const [selectedProgram, setselectedProgram] = useState('');
+  const [selectedProgramId, setselectedProgramId] = useState('');
 
   const handleSelectedBatch = (item) => {
     setBatchYear(item.target.value);
   }
 
+  const handleSelectedProgram = (item, group) => {
+    console.log("item", item)
+    console.log("item", data)
+    console.log("item", group)
+    setselectedProgram(item.target.value);
+    const selectedProgramId2 = group.find(data => {
+      if (data.name === item.target.value) {
+        return data.programId;
+      }
+    })
+    setselectedProgramId(selectedProgramId2.programId);
+    console.log("item2", selectedProgramId2.programId)
+  }
+
   const handleSubmit = (id) => {
     if (!batchYear) return;
     
-    history.push(`/alumni?batch=${batchYear}&programId=${id}`)
+    history.push(`/alumni?batch=${batchYear}&programId=${selectedProgramId}`)
   }
 
   const handleClear = () => {
     setBatchYear('');
+    setselectedProgram('');
+    setselectedProgramId('');
   }
 
   return (
     <Container>
-     <Box sx={{ flexGrow: 1 }}>
+     <Paper sx={{ flexGrow: 1, borderRadius: '8px', padding: '52px' }}>
       {
         data.map((item, index) =>  (
-          <div key={index} className={classes.instituteContainer}>
-            <Typography color='primary' variant='h5'>{item.name}</Typography>
-              <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-              {
-                item.programs.map((program, index) => (
-                  <Tile 
-                    item={program} 
-                    key={index}
-                    id={program.programId}
-                    handleSubmit={handleSubmit}
-                    image={calendar}
-                    modelContent={
-                    <>
-                      <Select menuItem={batchYears} label='Batch Year' value={batchYear} handleChange={handleSelectedBatch}/>
-                      <Box>
-                        <Link onClick={handleClear}>Clear Filter</Link>
-                      </Box>
-                    </>
-                  }
-                  />
-                ))
-              }
-            </Grid>
-          </div>
+          <Box key={index} >     
+                <Tile 
+                  item={item} 
+                  key={index}
+                  id={item.instituteId}
+                  handleSubmit={handleSubmit}
+                  image={calendar}
+                  modelContent={
+                  <>
+                    <Select menuItem={item.programs} label='Programs' value={selectedProgram} handleChange={(e) => handleSelectedProgram(e, item.programs)}/>
+                    <Select menuItem={batchYears} label='Batch Year' value={batchYear} handleChange={handleSelectedBatch}/>
+                    <Box>
+                      <Link onClick={handleClear}>Clear Filter</Link>
+                    </Box>
+                  </>
+                }
+                />
+          </Box>
          )
         )
       }
-    </Box>
+     </Paper>
     </Container>
   )
 }

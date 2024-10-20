@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import programPic from '../../assets/images/emblem.png';
 import useStyles from './styles';
 import Modal from '../modal';
+import { Typography } from '@material-ui/core';
 
 const Tile = (props) => {
   const { item, modelContent, handleSubmit, image, id } = props;
@@ -18,7 +19,7 @@ const Tile = (props) => {
   }
 
   return (
-    <>
+    <Box style={{display: 'flex', alignItems: 'flex-start'}}>
       <Modal
         open={open} 
         handleClose={handleCloseModal} 
@@ -29,15 +30,15 @@ const Tile = (props) => {
       >
         { modelContent }
       </Modal>
-      <Grid item xs={4} sm={8} md={3} >
-        <Paper className={classes.tile} >
-          <Box>
-            <img className={classes.programPic} src={programPic} alt='Alumni Placeholder Image' />
-          </Box>
-          <Link onClick={handleOpen}>{item.name}</Link>
-        </Paper>
+      <Grid  className={classes.tile} container onClick={handleOpen} style={{diplay:'flex', width: '100%', alignItems: 'center', justifyContent:'center', marginBottom:'24px', cursor: 'pointer'}}>
+        <Grid item sm={12} lg={2} style={{display: 'flex', justifyContent: 'center'}}>
+          <img className={classes.programPic} src={programPic} alt='Alumni Placeholder Image' />
+        </Grid>
+        <Grid item sm={12} lg={10}>
+          <Typography color='primary' variant='h5' style={{color: '#161616'}}>{item.name}</Typography>
+        </Grid>
       </Grid>
-    </>
+    </Box>
   )
 }
 

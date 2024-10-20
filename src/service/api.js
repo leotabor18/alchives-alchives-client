@@ -5,6 +5,8 @@ const api = {
   LOGIN                  : `${API_BASE_PATH}/public/login`,
   NEW_PASSWORD           : `${API_BASE_PATH}/auth/new-password`,
   ADMINISTRATORS_BY_TOKEN: `${API_BASE_PATH}/auth/search/findByToken`,
+  EVENTS                 : `${API_BASE_PATH}/events`,
+  EVENT                  : `${API_BASE_PATH}/event`,
   USERS_BY_TOKEN         : `${API_BASE_PATH}/auth/user`,
   ALUMNIS_API             : `${API_BASE_PATH}/alumnis`,
   ALUMNI_API             : `${API_BASE_PATH}/alumni`,

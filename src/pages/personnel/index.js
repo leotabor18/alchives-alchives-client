@@ -56,7 +56,7 @@ const Personnel = (props) => {
     const { setErrors, setSubmitting } = formik;
     const newValue = {
       ...values,
-      image
+      image: image.name
     }
 
     if (image === prevImage) {

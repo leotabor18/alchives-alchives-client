@@ -89,6 +89,15 @@ export const personnelSchema = Yup.object({
                       .required(REQUIRED_FIELD)
 });
 
+export const eventSchema = Yup.object({
+  eventPersonnelList: Yup.array().of(
+    Yup.object().shape({
+      value: Yup.string().required('Value is required'),
+      Message: Yup.string().required('Value is required'),
+    })
+  )
+});
+
 export const programSchema = Yup.object({
   name: Yup.string()
                       .required(REQUIRED_FIELD)

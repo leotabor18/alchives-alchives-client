@@ -16,6 +16,16 @@ export const createAlumniData = (id, studentNumber, name, program, batchYear) =>
   };
 }
 
+export const createEventData = (id, eventName, eventVenue, eventDate, batchYear) => {
+  return {
+    id,
+    eventName,
+    eventVenue,
+    eventDate,
+    batchYear
+  };
+}
+
 export const createProgramData = (id, name, institute) => {
   return {
     id,
@@ -24,11 +34,11 @@ export const createProgramData = (id, name, institute) => {
   };
 }
 
-export const createPersonnelData = (id, name, title, department) => {
+export const createPersonnelData = (id, name, position, department) => {
   return {
     id,
-    name,
-    title,
+    fullName: name,
+    position,
     department,
   };
 }

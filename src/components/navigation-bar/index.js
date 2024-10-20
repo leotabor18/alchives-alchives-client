@@ -156,13 +156,13 @@ const NavigationBar = (props) => {
              <img onClick={handleHome} className={classes.mLogo} src={ccaLogo} alt='CCA Logo' />
           </Typography>
           {
-            isPublic && (!isMobileView && !isTabletView ) ?
+            (!isMobileView && !isTabletView ) ?
               <Typography
                 variant="h3"
                 noWrap
                 className={classes.headerTitle}
               >
-                ALUMNI
+                AL-Chives
               </Typography>
             :
             <></>
