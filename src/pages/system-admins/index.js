@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Title from '../../components/title'
 import useStyles from './styles';
 import SearchBar from '../../components/search-bar';
-import { createHeadCells, createPersonnelData, createProgramData } from '../../utility';
+import { createHeadCells, createPersonnelData, createProgramData, createUserData } from '../../utility';
 import { useHistory } from 'react-router';
 import EnhancedTable from '../../components/table';
 import api from '../../service/api';
@@ -14,21 +14,24 @@ import IconButton from '../../components/icon-button';
 
 const headCells = [
   createHeadCells('fullName', false, 'Name', false, true),
-  createHeadCells('position', false, 'Position', false, false),
-  createHeadCells('department', false, 'Department', false, false),
+  createHeadCells('email', false, 'Email Address', false, true),
+  createHeadCells('role', false, 'Role', false, false),
 ]
 
-const Personnels = () => {
+const SystemAdmins = () => {
   const classes = useStyles();
 
   const history = useHistory();
 
   const getProps = {
-    api: api.PERSONNELS_API,
+    api: api.USER_API + '/search/findByRoleNot',
     keyword: '',
-    dataFormat: createPersonnelData,
+    dataFormat: createUserData,
     columns: headCells,
-    pageName: 'Personnels',
+    pageName: 'SystemAdmins',
+    params: {
+      role: 'ALUMNI'
+    }
   }
 
   const { state, handles } = useGetApi(getProps)
@@ -36,16 +39,17 @@ const Personnels = () => {
   const { data, order, orderBy, page, rowsPerPage, isLoading, total } = state;
 
   const handleView = (id) => {
-    history.push(`/portal/personnel/${id}`)
+    history.push(`/portal/admins/${id}`)
   }
 
   const handleAddAlumni = () => {
-    history.push('/portal/personnel/create');
+    history.push('/portal/admins/create');
   }
 
   const handleSearchQuery = (values) => {
     handleQueryParams({ programName: values }, api.PROGRAM_SEARCH_API);
   }
+  
 
   useEffect(() => {
     console.log('hereee', data);
@@ -53,7 +57,7 @@ const Personnels = () => {
 
   return (
     <Container className={classes.container}>
-      <Title name='School Personnels'/>
+      <Title name='System Admins'/>
       <Grid container>
         <Grid item xl={6} lg={6}>
           <SearchBar handleSearchQuery={handleSearchQuery}/>
@@ -77,7 +81,7 @@ const Personnels = () => {
           orderBy={orderBy}
           page={page}
           rowsPerPage={rowsPerPage}
-          name='Personnels'
+          name='SystemAdmins'
           handleView={handleView}
           totalItems={total}
         />
@@ -86,4 +90,4 @@ const Personnels = () => {
   )
 }
 
-export default Personnels
+export default SystemAdmins

@@ -16,6 +16,8 @@ import useResponsive from '../../hooks/useResponsive';
 import { API_METHOD } from '../../utility/constant';
 import { Form, Formik } from 'formik';
 import Select from '../../components/select';
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
 const headCells = [
   createHeadCells('name', false, 'Name', false)
@@ -239,8 +241,11 @@ return (
                   </Grid>  
                   <Grid className={isResponsive ? classes.mPhotoContainer : classes.photoContainer} item md={4} sm={6} xs={12}>
                     {
-                      preview ?  
+                      preview ? 
+                      <Zoom>
+
                         <img style={{width: '350px'}} src={preview} /> 
+                      </Zoom> 
                       :
                         <Paper>
 

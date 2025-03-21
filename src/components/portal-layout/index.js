@@ -1,20 +1,27 @@
-import { faAddressBook, faCalendar, faFolderOpen, faSchool, faUserGraduate, faUserGroup } from '@fortawesome/free-solid-svg-icons';
+import { faAddressBook, faCalendar, faFolderOpen, faSchool, faUserGraduate, faUserGroup, faUsersGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Box, Divider, Drawer, List, ListItem, ListItemIcon, ListItemText, Tooltip } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import backgroundImage from '../../assets/images/angeles-symbol.png';
 import useResponsive from '../../hooks/useResponsive';
 import { createNavigationBarMenu } from '../../utility';
 import NavigationBar from '../navigation-bar';
 import useStyles from './styles';
+import { AuthContext } from '../../context/AuthContext';
 
 const MENU = [
   createNavigationBarMenu('Alumni', '/portal/alumni', <FontAwesomeIcon icon={faUserGraduate} size="lg" />),
   createNavigationBarMenu('Programs', '/portal/programs', <FontAwesomeIcon icon={faAddressBook} size="lg" />),
   createNavigationBarMenu('Graduation Events', '/portal/events', <FontAwesomeIcon icon={faCalendar} size="lg" />),
   createNavigationBarMenu('School Personnels', '/portal/personnel', <FontAwesomeIcon icon={faUserGroup} size="lg" />),
-  createNavigationBarMenu('Content Management', '/portal/content-management', <FontAwesomeIcon icon={faFolderOpen} size="lg" />),
+  createNavigationBarMenu('System Admins', '/portal/admins', <FontAwesomeIcon icon={faUsersGear} size="lg" />),
+  // createNavigationBarMenu('Content Management', '/portal/content-management', <FontAwesomeIcon icon={faFolderOpen} size="lg" />),
+  // createNavigationBarMenu('School Overview', '/portal/school-overview', <FontAwesomeIcon icon={faSchool} size="lg" />)
+]
+const MENU_REG = [
+  createNavigationBarMenu('Programs', '/portal/programs', <FontAwesomeIcon icon={faAddressBook} size="lg" />),
+  // createNavigationBarMenu('Content Management', '/portal/content-management', <FontAwesomeIcon icon={faFolderOpen} size="lg" />),
   // createNavigationBarMenu('School Overview', '/portal/school-overview', <FontAwesomeIcon icon={faSchool} size="lg" />)
 ]
 
@@ -22,7 +29,8 @@ const PortalLayout = (props) => {
   const { children } = props;
   const classes = useStyles();
   const history = useHistory();
-  
+  const { state } = useContext(AuthContext);
+
   const { pathname } = history.location;
 
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -35,6 +43,7 @@ const PortalLayout = (props) => {
     history.push(path)
   }
 
+  const menu = state.user.role === 'ADMIN' ? MENU : MENU_REG
   const isProfile = pathname.includes('profile');
 
   useEffect(() => {
@@ -78,7 +87,7 @@ const PortalLayout = (props) => {
       >
         <List className={classes.list}>
           {
-            MENU.map((item, index) => (
+            menu.map((item, index) => (
               <div key={'box-panel-' + index}>
                 <Box className={`menu-list-${index}`}>
                   <Tooltip title={item.name}>

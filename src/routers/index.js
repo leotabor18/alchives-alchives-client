@@ -27,6 +27,9 @@ import ContentManagements from '../pages/content-management';
 import Overviews from '../pages/overviews';
 import Personnel from '../pages/personnel';
 import Overview from '../pages/overview';
+import Event from '../pages/event';
+import SystemAdmins from '../pages/system-admins';
+import SystemAdmin from '../pages/system-admin';
 
 const EnhancedSwitch = (props) => {
   const { children } = props
@@ -49,8 +52,20 @@ const Routes = () => {
     <Switch>
       
         {
+          token && state.user.role === 'REGISTRAR' ?
+          <>
+            <Route exact path="/portal/" ><Redirect to="/portal/programs" /></Route>
+            <Route exact path="/" ><Redirect to="/portal/programs" /></Route>
+            <RoutesLayout exact layout={PortalLayout} path="/portal/programs" component={Programs} />
+            <RoutesLayout exact layout={PortalLayout} path="/portal/programs/:id" component={Program} />
+            {/* <RoutesLayout exact layout={PortalLayout} path="/portal/school-overview" component={Overviews} />
+            <RoutesLayout exact layout={PortalLayout} path="/portal/school-overview/create" component={Overview} />
+            <RoutesLayout exact layout={PortalLayout} path="/portal/school-overview/:id" component={Overview} /> */}
+          </>
+          :
           token && state.user.role === 'ADMIN' ?
             <>
+              <Route exact path="/portal/" ><Redirect to="/portal/alumni" /></Route>
               <Route exact path="/" ><Redirect to="/portal/alumni" /></Route>
               <RoutesLayout exact layout={PortalLayout} path="/portal/alumni" component={Alumni} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/alumni/:id" component={Alumnus} />
@@ -64,16 +79,20 @@ const Routes = () => {
               <RoutesLayout exact layout={PortalLayout} path="/portal/profile" component={Profile} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/profile/settings" component={ProfileSetting} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/events" component={Events} />
-              <RoutesLayout exact layout={PortalLayout} path="/portal/events/create" component={Events} />
-              <RoutesLayout exact layout={PortalLayout} path="/portal/events/:id" component={Events} />
+              <RoutesLayout exact layout={PortalLayout} path="/portal/events/create" component={Event} />
+              <RoutesLayout exact layout={PortalLayout} path="/portal/events/:id" component={Event} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/personnel" component={Personnels} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/personnel/create" component={Personnel} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/personnel/:id" component={Personnel} />
+              <RoutesLayout exact layout={PortalLayout} path="/portal/admins/create" component={SystemAdmin} />
+              <RoutesLayout exact layout={PortalLayout} path="/portal/admins/" component={SystemAdmins} />
+              <RoutesLayout exact layout={PortalLayout} path="/portal/admins/:id" component={SystemAdmin} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/content-management" component={ContentManagements} />
               {/* <RoutesLayout exact layout={PortalLayout} path="/portal/school-overview" component={Overviews} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/school-overview/create" component={Overview} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/school-overview/:id" component={Overview} /> */}
             </>
+          
           : token && state.user.role === 'ALUMNI' ?
             <>
               <RoutesLayout layout={MainLayout} exact path="/alumni" component={PublicAlumni} />

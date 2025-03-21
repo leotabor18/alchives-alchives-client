@@ -11,7 +11,13 @@ export default makeStyles((theme) => ({
   bookContent: {
     backgroundColor: '#FFFAF0',
     border: '2px solid #a5a5a5',
-    boxShadow: 'inset 0 0 24px rgba(0, 0, 0, 0.5)'
+    boxShadow: 'inset 0 0 24px rgba(0, 0, 0, 0.5)',
+    textAlign: 'center'
+  },
+  bookContentStudents: {
+    backgroundColor: '#FFFAF0',
+    border: '2px solid #a5a5a5',
+    boxShadow: 'inset 0 0 24px rgba(0, 0, 0, 0.5)',
   },
   firstPage: {
     visibility: 'hidden'
@@ -32,14 +38,15 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
     flexDirection: 'column',
     padding: theme.spacing(3),
-    height:'80%'
+    height:'100%'
   },
   gradPic: {
-    width: '60%',
-    marginBottom: theme.spacing(2)
+    width: '45%',
+    marginBottom: theme.spacing(2),
+    marginRight: theme.spacing(2),
   },
   textBox: {
-    textAlign: 'center'
+    textAlign: 'left',
   },
   parentContainer: {
     maxWidth: '100% !important',
@@ -64,6 +71,10 @@ export default makeStyles((theme) => ({
     width: '150px',
     marginBottom: theme.spacing(1)
   },
+  programPicSlide: {
+    width: '250px',
+    marginBottom: theme.spacing(1)
+  },
   studentPic: {
     width: '350px',
     marginBottom: theme.spacing(1)
@@ -73,6 +84,7 @@ export default makeStyles((theme) => ({
     ...theme.typography.body2,
     padding: theme.spacing(2),
     textAlign: 'center',
+    minHeight: '280px',
     color: theme.palette.text.secondary,
     marginTop: theme.spacing(1),
     '& a': {
@@ -102,6 +114,11 @@ export default makeStyles((theme) => ({
     '& .MuiPaper-root' : {
       maxWidth: '900px'
     }
+  },
+  studentName: {
+    fontSize: '20px',
+    fontWeight: 'bold',
+    color: colors.PRIMARY
   }
 }))
 

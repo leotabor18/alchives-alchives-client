@@ -60,8 +60,10 @@ const Login = () => {
 
       if (userResponse.data.role === 'ALUMNI') {
         history.push('/');
-      } else {
+      } else if (userResponse.data.role === 'ADMIIN') {
         history.push('portal/alumni');
+      } else {
+        history.push('portal/programs');
       }
       setSubmitting(false);
     } catch(e) {

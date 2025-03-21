@@ -1,4 +1,4 @@
-import { faAddressBook, faBell, faGear, faSignIn, faSignOut, faUser, faUserGraduate } from '@fortawesome/free-solid-svg-icons';
+import { faAddressBook, faBell, faCalendar, faCalendarPlus, faFolderOpen, faGear, faSignIn, faSignOut, faUser, faUserGraduate, faUserGroup, faUsersGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AppBar, Badge, Box, IconButton, Tooltip } from '@material-ui/core';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -24,9 +24,10 @@ const NAVIGATION_BAR_MENU = [
 const MOBILE_NAVIGATION_BAR_MENU = [
   createNavigationBarMenu('Alumni', '/portal/alumni', <FontAwesomeIcon icon={faUserGraduate} size="lg" />),
   createNavigationBarMenu('Programs', '/portal/programs', <FontAwesomeIcon icon={faAddressBook} size="lg" />),
-  createNavigationBarMenu('Notifications', '/portal/notifications', <FontAwesomeIcon icon={faBell} size="lg" />),
-  createNavigationBarMenu('Settings', '/portal/settings', <FontAwesomeIcon icon={faGear} size="lg" />),
-  createNavigationBarMenu('Logout', '/portal', <FontAwesomeIcon icon={faSignOut} size="lg" />)
+  createNavigationBarMenu('Graduation Events', '/portal/events', <FontAwesomeIcon icon={faCalendarPlus} size="lg" />),
+  createNavigationBarMenu('School Personnels', '/portal/personnel', <FontAwesomeIcon icon={faUserGroup} size="lg" />),
+  createNavigationBarMenu('System Admins', '/portal/admins', <FontAwesomeIcon icon={faUsersGear} size="lg" />),
+  createNavigationBarMenu('Content Management', '/portal/content-management', <FontAwesomeIcon icon={faFolderOpen} size="lg" />),
 ]
 
 const PROFILE_MENU = [
@@ -159,13 +160,13 @@ const NavigationBar = (props) => {
              <img onClick={handleHome} className={classes.mLogo} src={ccaLogo} alt='CCA Logo' />
           </Typography>
           {
-            isPublic && (!isMobileView && !isTabletView ) ?
+            (!isMobileView && !isTabletView ) ?
               <Typography
                 variant="h3"
                 noWrap
                 className={classes.headerTitle}
               >
-                ALUMNI
+                AL-Chives
               </Typography>
             :
             <></>

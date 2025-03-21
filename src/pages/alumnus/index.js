@@ -15,6 +15,8 @@ import { API_METHOD } from '../../utility/constant';
 import { REQUIRED_FIELD, alumniSchema, profileSchema } from '../../validation/schema';
 import { headCells } from '../alumni';
 import useStyles from './styles';
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
 const Alumnus = (props) => {
   const { match } = props;
@@ -42,7 +44,27 @@ const Alumnus = (props) => {
   const [programId, setProgramId] = useState('');
   const [prevImage, setPrevImage] = useState('');
 
-  const [preview, setPreview] = useState(null)
+  const [preview, setPreview] = useState(null);
+
+  const [achievements, setAchievements] = useState([]);
+
+  const handleAddAchievement = () => {
+    setAchievements([
+      ...achievements,
+      { text: '', date: '' },
+    ]);
+  };
+
+  const handleAchievementChange = (index, field, value) => {
+    const newAchievements = [...achievements];
+    newAchievements[index][field] = value;
+    setAchievements(newAchievements);
+  };
+
+  const handleRemoveAchievement = (index) => {
+    const newAchievements = achievements.filter((_, i) => i !== index);
+    setAchievements(newAchievements);
+  };
 
   const getProgramProps = {
     api: api.PROGRAMS_API,
@@ -85,7 +107,8 @@ const Alumnus = (props) => {
       programId,
       award,
       image,
-      batchYear
+      batchYear,
+      achievements: JSON.stringify(achievements)
     }
 
     if (image === prevImage) {
@@ -93,6 +116,7 @@ const Alumnus = (props) => {
     }
 
     console.log('first, newValue', newValue)
+
     try {
       await request({
         url: isCreate ? `${api.ALUMNI_API}/create` : `${api.ALUMNI_API}/${id}`,
@@ -125,15 +149,33 @@ const Alumnus = (props) => {
         url: `${api.ALUMNIS_API}/${id}`,
         method: API_METHOD.GET,
       })
-      const { firstName, email, lastName, studentNumber, image, batchYear, quotes, _links } = response.data;
+      const { firstName, email, lastName, studentNumber, image, batchYear, award, quotes, _links } = response.data;
       setFirstName(firstName);
       setLastName(lastName);
       setStudentNumber(studentNumber);
       setQuotes(quotes);
       setBatchYear(batchYear);
       setEmail(email)
+      setAward(award)
 
       const programId = _links.program.href.replace(`${api.ALUMNIS_API}/`, '');
+
+      const response2 = await request({
+        url: `${api.ACHIEVEMENTS_API}/search/findByAlumniId`,
+        method: API_METHOD.GET,
+        params: {
+          alumniId: id
+        }
+      })
+
+      const newAchievements = response2.data._embedded.achievements.map(item => {
+        return {
+          text: item.text,
+          date: item.date
+        }
+      });
+      console.log('==================',response2.data)
+      setAchievements(newAchievements);
 
       const secondResponse = await request({
         url: _links.program.href,
@@ -274,7 +316,13 @@ return (
                         <Select error={programError} menuItem={programData} label='Program*' value={program} handleChange={handleSelectedProgram}/>
                       </Grid>
                       <Grid item lg={6} md={6} sm={12} xs={12}>
-                        <Select menuItem={[]} label='Academic Honors' value={''} handleChange={() =>{}}/>
+                        {/* Summa Cum Laude (highest), Magna Cum Laude (high), and Cum Laude (with honors */}
+                        <Select menuItem={[
+                          {name: 'Summa Cum Laude (highest)'},
+                          {name: 'Magna Cum Laude (high)'},
+                          {name: 'Cum Laude (with honors)'},
+
+                        ]} label='Academic Honors' value={award} handleChange={(e) =>setAward(e.target.value)}/>
                       </Grid>
                       <Grid item lg={6} md={6} sm={12} xs={12}>
                       <Select error={batchError} menuItem={batchYears} label='Batch Year*' value={batchYear} handleChange={handleSelectedBatch}/>
@@ -293,12 +341,52 @@ return (
                           helperText={formik.touched.quotes && formik.errors.quotes}
                         />
                       </Grid>
-                    </Grid>  
+ 
+                     {/* Achievements Section */}
+                    <Grid item xs={12}>
+                      <Button onClick={handleAddAchievement} variant="outlined" color="primary">
+                        Add Achievement
+                      </Button>
+                    </Grid>
+                    
+                    {/* Dynamic Achievements List */}
+                    {achievements.map((achievement, index) => (
+                      <Grid container spacing={2} key={index}>
+                        <Grid item xs={6}>
+                          <TextField
+                            label={`Achievement ${index + 1}`}
+                            fullWidth
+                            value={achievement.text}
+                            onChange={(e) => handleAchievementChange(index, 'text', e.target.value)}
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextField
+                            label="Date"
+                            fullWidth
+                            type="date"
+                            value={achievement.date}
+                            onChange={(e) => handleAchievementChange(index, 'date', e.target.value)}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Button onClick={() => handleRemoveAchievement(index)} color="secondary">
+                            Remove Achievement
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    ))}
+                                        </Grid> 
                   </Grid>  
                   <Grid className={isResponsive ? classes.mPhotoContainer : classes.photoContainer} item md={4} sm={6} xs={12}>
                     {
                       preview ?  
+                      <Zoom>
                         <img style={{width: '350px'}} src={preview} /> 
+                      </Zoom>
                       :
                         <Paper>
 

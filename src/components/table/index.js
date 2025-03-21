@@ -188,6 +188,25 @@ const TableContent = (props) => {
           <TableCell align="left">{row.batchYear}</TableCell>
         </>
       )
+    case 'Events':
+      return (
+        <>
+          {/* <TableCell
+            component="th"
+            id={labelId}
+            scope="row"
+            padding="none"
+          >
+            >
+              {row.studentNumber}
+            </Link>
+          </TableCell> */}
+          <TableCell align="left"><Link className={classes.link} onClick={() => handleView(row.id)}>{row.eventName}</Link></TableCell>
+          <TableCell align="left">{row.eventVenue}</TableCell>
+          <TableCell align="left">{row.eventDate}</TableCell>
+          <TableCell align="left">{row.batchYear}</TableCell>
+        </>
+      )
     case 'Program':
       return (
         <>
@@ -212,11 +231,27 @@ const TableContent = (props) => {
             scope="row"
           >
             <Link className={classes.link} onClick={() => handleView(row.id)}>
-              {row.name}
+              {row.fullName}
             </Link>
           </TableCell>
-          <TableCell align="left">{row.title}</TableCell>
+          <TableCell align="left">{row.position}</TableCell>
           <TableCell align="left">{row.department}</TableCell>
+        </>
+      )
+    case 'SystemAdmins':
+      return (
+        <>
+          <TableCell
+            component="th"
+            id={labelId}
+            scope="row"
+          >
+            <Link className={classes.link} onClick={() => handleView(row.id)}>
+              {row.fullName}
+            </Link>
+          </TableCell>
+          <TableCell align="left">{row.email}</TableCell>
+          <TableCell align="left">{row.role}</TableCell>
         </>
       )
     default:
