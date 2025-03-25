@@ -23,7 +23,7 @@ const headCells = [
 
 const Program = (props) => {
   const { match } = props;
-  const { id } = match.params;
+  const { id, instituteId } = match.params;
   const isCreate = id === 'create';
   
   const classes = useStyles();
@@ -34,7 +34,6 @@ const Program = (props) => {
   const [description, setDescription] = useState('');
   const [institute, setInstitute]     = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [instituteId, setInstituteId] = useState('');
   const [instituteError, setInstituteError] = useState('');
 
   const initialValues = {
@@ -53,8 +52,6 @@ const Program = (props) => {
 
   const { state: programState } = useGetApi(getInstituteProps)
   const { data: instituteData, isLoading: instituteLoading } = programState;
-
-  console.log('instituteData', instituteData)
 
   const handleSubmit =  async(values, formik) => {
     const { setErrors, setSubmitting } = formik;
@@ -78,7 +75,7 @@ const Program = (props) => {
         data: newValues
       });
 
-      history.push('/portal/programs');
+      history.push('/portal/institutes/'+instituteId);
     } catch (error) {
       if (error?.response?.status === 409) {
         setErrors({
@@ -91,7 +88,7 @@ const Program = (props) => {
   }
 
   const handleCancel = () => {
-    history.push('/portal/programs');
+    history.push('/portal/institutes/'+instituteId);
   }
 
   const handleGetUser = async() => {
@@ -108,11 +105,25 @@ const Program = (props) => {
         url: _links.institute.href,
         method: API_METHOD.GET,
       })
-      const instituteId = _links.institute.href.replace(`${api}/`, '');
-      console.log('secondResponse', secondResponse)
 
-      setInstituteId(instituteId);
       setInstitute(secondResponse.data.name);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  const handleGetInstitute = async() => {
+    setIsLoading(true);
+    try {
+      const response = await request({
+        url: `${api.INSTITUTES_API}/${instituteId}`,
+        method: API_METHOD.GET,
+      })
+      const { name } = response.data;
+      
+      setInstitute(name);
     } catch (e) {
       console.log(e);
     } finally {
@@ -123,6 +134,10 @@ const Program = (props) => {
   useEffect(() => {
     if (id && !isCreate) {
       handleGetUser()
+    } 
+
+    if (instituteId) {
+      handleGetInstitute()
     }
   }, [])
 
@@ -178,8 +193,6 @@ const handleSelectedInstitute = (item) => {
   const selectedInstituteId = instituteData.find(data => {
     return data.name === value;
   })
-  console.log('selectedInstituteId', selectedInstituteId)
-  setInstituteId(parseInt(selectedInstituteId.id));
 }
 
 return (

@@ -23,12 +23,19 @@ const NAVIGATION_BAR_MENU = [
 
 const MOBILE_NAVIGATION_BAR_MENU = [
   createNavigationBarMenu('Alumni', '/portal/alumni', <FontAwesomeIcon icon={faUserGraduate} size="lg" />),
-  createNavigationBarMenu('Programs', '/portal/programs', <FontAwesomeIcon icon={faAddressBook} size="lg" />),
+  createNavigationBarMenu('Institutes', '/portal/institutes', <FontAwesomeIcon icon={faAddressBook} size="lg" />),
   createNavigationBarMenu('Graduation Events', '/portal/events', <FontAwesomeIcon icon={faCalendarPlus} size="lg" />),
   createNavigationBarMenu('School Personnels', '/portal/personnel', <FontAwesomeIcon icon={faUserGroup} size="lg" />),
   createNavigationBarMenu('System Admins', '/portal/admins', <FontAwesomeIcon icon={faUsersGear} size="lg" />),
-  createNavigationBarMenu('Content Management', '/portal/content-management', <FontAwesomeIcon icon={faFolderOpen} size="lg" />),
+  // createNavigationBarMenu('Content Management', '/portal/content-management', <FontAwesomeIcon icon={faFolderOpen} size="lg" />),
 ]
+
+const MENU_REG = [
+  createNavigationBarMenu('Institutes', '/portal/institutes', <FontAwesomeIcon icon={faAddressBook} size="lg" />),
+  // createNavigationBarMenu('Content Management', '/portal/content-management', <FontAwesomeIcon icon={faFolderOpen} size="lg" />),
+  // createNavigationBarMenu('School Overview', '/portal/school-overview', <FontAwesomeIcon icon={faSchool} size="lg" />)
+]
+
 
 const PROFILE_MENU = [
   createNavigationBarMenu('Profile', '/portal/profile', <FontAwesomeIcon icon={faUser} size="lg" />),
@@ -53,7 +60,9 @@ const NavigationBar = (props) => {
   const classes = useStyles();
   const { isMobileView, isResponsive, isTabletView } = useResponsive();
 
-  const menu = isProfile ? PROFILE_MENU : isResponsive ? MOBILE_NAVIGATION_BAR_MENU :  NAVIGATION_BAR_MENU;
+  const options = authContext.state.user.role === 'ADMIN' ? MOBILE_NAVIGATION_BAR_MENU : MENU_REG
+
+  const menu = isProfile ? PROFILE_MENU : isResponsive ? options :  NAVIGATION_BAR_MENU;
 
   const history = useHistory();
 

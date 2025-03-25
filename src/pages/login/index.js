@@ -63,7 +63,7 @@ const Login = () => {
       } else if (userResponse.data.role === 'ADMIIN') {
         history.push('portal/alumni');
       } else {
-        history.push('portal/programs');
+        history.push('portal/institutes');
       }
       setSubmitting(false);
     } catch(e) {

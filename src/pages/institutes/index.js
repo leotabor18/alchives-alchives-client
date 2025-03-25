@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Title from '../../components/title'
 import useStyles from './styles';
 import SearchBar from '../../components/search-bar';
-import { createHeadCells, createProgramData } from '../../utility';
+import { createHeadCells, createInstituteData, createInstitutesData, createProgramData } from '../../utility';
 import { useHistory } from 'react-router';
 import EnhancedTable from '../../components/table';
 import api from '../../service/api';
@@ -14,23 +14,21 @@ import IconButton from '../../components/icon-button';
 
 const headCells = [
   createHeadCells('name', false, 'Name', false, true),
-  createHeadCells('institute', false, 'Institute', false, false),
+  createHeadCells('description', false, 'Description', false, true),
+  createHeadCells('programs', false, 'No. of Programs', false, false),
 ]
 
-const Programs = (props) => {
+const Institutes = () => {
   const classes = useStyles();
 
   const history = useHistory();
 
   const getProps = {
-    api: api.PROGRAMS_API + '/search/findByInstituteInstituteId',
+    api: api.INSTITUTES_API,
     keyword: '',
-    params: {
-      instituteId: props.id
-    },
-    dataFormat: createProgramData,
+    dataFormat: createInstitutesData,
     columns: headCells,
-    pageName: 'Programs',
+    pageName: 'Institutes',
   }
 
   const { state, handles } = useGetApi(getProps)
@@ -38,21 +36,26 @@ const Programs = (props) => {
   const { data, order, orderBy, page, rowsPerPage, isLoading, total } = state;
 
   const handleView = (id) => {
-    history.push(`/portal/institute/${props.id}/programs/${id}`)
+    history.push(`/portal/institutes/${id}`)
   }
 
   const handleAddAlumni = () => {
-    history.push('/portal/institute/'+props.id+'/programs/create');
+    history.push('/portal/institutes/create');
   }
-  
+
+  const handleSearchQuery = (values) => {
+    handleQueryParams({ programName: values }, api.PROGRAM_SEARCH_API);
+  }
+
   return (
     <Container className={classes.container}>
-      <Title name='Programs'/>
+      <Title name='Institutes'/>
       <Grid container>
         <Grid item xl={6} lg={6}>
+          <SearchBar handleSearchQuery={handleSearchQuery}/>
         </Grid>
         <Grid className={classes.iconContainer} item xl={6} lg={6} md={6} xs={2} sm={6}>
-          <IconButton title='Add Program' icon={<AddBoxIcon fontSize='large' />} handleClick={handleAddAlumni} />
+          <IconButton title='Add Institutes' icon={<AddBoxIcon fontSize='large' />} handleClick={handleAddAlumni} />
         </Grid>
       </Grid>
       {
@@ -70,7 +73,7 @@ const Programs = (props) => {
           orderBy={orderBy}
           page={page}
           rowsPerPage={rowsPerPage}
-          name='Program'
+          name='Institutes'
           handleView={handleView}
           totalItems={total}
         />
@@ -79,4 +82,4 @@ const Programs = (props) => {
   )
 }
 
-export default Programs
+export default Institutes

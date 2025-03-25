@@ -12,7 +12,7 @@ import { AuthContext } from '../../context/AuthContext';
 
 const MENU = [
   createNavigationBarMenu('Alumni', '/portal/alumni', <FontAwesomeIcon icon={faUserGraduate} size="lg" />),
-  createNavigationBarMenu('Programs', '/portal/programs', <FontAwesomeIcon icon={faAddressBook} size="lg" />),
+  createNavigationBarMenu('Institutes', '/portal/institutes', <FontAwesomeIcon icon={faAddressBook} size="lg" />),
   createNavigationBarMenu('Graduation Events', '/portal/events', <FontAwesomeIcon icon={faCalendar} size="lg" />),
   createNavigationBarMenu('School Personnels', '/portal/personnel', <FontAwesomeIcon icon={faUserGroup} size="lg" />),
   createNavigationBarMenu('System Admins', '/portal/admins', <FontAwesomeIcon icon={faUsersGear} size="lg" />),
@@ -20,7 +20,7 @@ const MENU = [
   // createNavigationBarMenu('School Overview', '/portal/school-overview', <FontAwesomeIcon icon={faSchool} size="lg" />)
 ]
 const MENU_REG = [
-  createNavigationBarMenu('Programs', '/portal/programs', <FontAwesomeIcon icon={faAddressBook} size="lg" />),
+  createNavigationBarMenu('Institutes', '/portal/institutes', <FontAwesomeIcon icon={faAddressBook} size="lg" />),
   // createNavigationBarMenu('Content Management', '/portal/content-management', <FontAwesomeIcon icon={faFolderOpen} size="lg" />),
   // createNavigationBarMenu('School Overview', '/portal/school-overview', <FontAwesomeIcon icon={faSchool} size="lg" />)
 ]

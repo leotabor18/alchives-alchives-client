@@ -60,11 +60,18 @@ const useGetApi = (props) => {
       return programsData;
       
     } else if (pageName === 'Institutes') {
-      return embedded.institutes.map(institute => {
-        const { name, _links } = institute;
+      return  await Promise.all(embedded.institutes.map(async (institute) => {
+        const { name, description, _links } = institute;
         const instituteId = _links.self.href.replace(`${api}/`, '');
-        return dataFormat(instituteId, name);
+        const secondResponse = await request({
+          url: _links.programs.href,
+          method: API_METHOD.GET,
       });
+
+      const count = secondResponse.data._embedded.programs.length;
+
+        return dataFormat(instituteId, name, description, count);
+      }));
     } else if (pageName === 'Personnels') {
       return embedded.personnels.map(institute => {
         const { fullName, position, department, _links } = institute;

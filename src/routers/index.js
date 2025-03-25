@@ -30,6 +30,8 @@ import Overview from '../pages/overview';
 import Event from '../pages/event';
 import SystemAdmins from '../pages/system-admins';
 import SystemAdmin from '../pages/system-admin';
+import Institutes from '../pages/institutes';
+import Institute from '../pages/institute';
 
 const EnhancedSwitch = (props) => {
   const { children } = props
@@ -54,10 +56,12 @@ const Routes = () => {
         {
           token && state.user.role === 'REGISTRAR' ?
           <>
-            <Route exact path="/portal/" ><Redirect to="/portal/programs" /></Route>
-            <Route exact path="/" ><Redirect to="/portal/programs" /></Route>
-            <RoutesLayout exact layout={PortalLayout} path="/portal/programs" component={Programs} />
-            <RoutesLayout exact layout={PortalLayout} path="/portal/programs/:id" component={Program} />
+            <Route exact path="/portal/" ><Redirect to="/portal/institutes" /></Route>
+            <Route exact path="/" ><Redirect to="/portal/institutes" /></Route>
+            <RoutesLayout exact layout={PortalLayout} path="/portal/institutes" component={Institutes} />
+            <RoutesLayout exact layout={PortalLayout} path="/portal/institutes/:instituteId/:id" component={Institute} />
+            <RoutesLayout exact layout={PortalLayout} path="/portal/institute/:instituteId/programs/:id" component={Program} />
+            <RoutesLayout exact layout={PortalLayout} path="/portal/institute/:instituteId/programs/create" component={Program} />
             {/* <RoutesLayout exact layout={PortalLayout} path="/portal/school-overview" component={Overviews} />
             <RoutesLayout exact layout={PortalLayout} path="/portal/school-overview/create" component={Overview} />
             <RoutesLayout exact layout={PortalLayout} path="/portal/school-overview/:id" component={Overview} /> */}
@@ -71,8 +75,10 @@ const Routes = () => {
               <RoutesLayout exact layout={PortalLayout} path="/portal/alumni/:id" component={Alumnus} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/alumni/create" component={Alumnus} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/alumni/update/:id" component={Alumnus} />
-              <RoutesLayout exact layout={PortalLayout} path="/portal/programs" component={Programs} />
-              <RoutesLayout exact layout={PortalLayout} path="/portal/programs/:id" component={Program} />
+              <RoutesLayout exact layout={PortalLayout} path="/portal/institutes" component={Institutes} />
+              <RoutesLayout exact layout={PortalLayout} path="/portal/institutes/:id" component={Institute} />
+              <RoutesLayout exact layout={PortalLayout} path="/portal/institute/:instituteId/programs/:id" component={Program} />
+              <RoutesLayout exact layout={PortalLayout} path="/portal/institute/:instituteId/programs/create" component={Program} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/notifications" component={Notifications} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/notifications/:id" component={Notification} />
               <RoutesLayout exact layout={PortalLayout} path="/portal/settings" component={Settings} />

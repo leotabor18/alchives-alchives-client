@@ -254,6 +254,22 @@ const TableContent = (props) => {
           <TableCell align="left">{row.role}</TableCell>
         </>
       )
+    case 'Institutes':
+      return (
+        <>
+          <TableCell
+            component="th"
+            id={labelId}
+            scope="row"
+          >
+            <Link className={classes.link} onClick={() => handleView(row.id)}>
+              {row.name}
+            </Link>
+          </TableCell>
+          <TableCell align="left">{row.description ? row.description: '--'}</TableCell>
+          <TableCell align="left">{row.programs}</TableCell>
+        </>
+      )
     default:
       return <></>
   }

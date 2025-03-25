@@ -33,6 +33,14 @@ export const createProgramData = (id, name, institute) => {
     institute
   };
 }
+export const createInstitutesData = (id, name, description, programs) => {
+  return {
+    id,
+    name,
+    description,
+    programs
+  };
+}
 
 export const createPersonnelData = (id, name, position, department) => {
   return {
